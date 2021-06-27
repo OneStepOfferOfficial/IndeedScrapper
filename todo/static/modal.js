@@ -58,7 +58,7 @@ $(document).ready(function () {
     $('.state').click(function () {
         const state = $(this);
         var tID = state.data('source');
-        const new_state = "Todo";
+        var new_state = "Todo";
         if (state.text() === "In Progress") {
             new_state = "Complete";
         } else if (state.text() === "Complete") {
