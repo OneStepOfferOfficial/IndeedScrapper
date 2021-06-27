@@ -1,0 +1,40 @@
+{
+   "query":{
+      "bool":{
+         "filter":[
+            {
+               "term":{
+                  "category_id":2
+               }
+            },
+            {
+               "query":{
+                  "name_pinyin": "zi",
+               }
+            }
+         ]
+      }
+   },
+   "sort":[
+      {
+         "sort_value":{
+            "order":"asc"
+         }
+      },
+      {
+         "composite_score":{
+            "order":"desc"
+         }
+      },
+      {
+         "price":{
+            "order":"asc"
+         }
+      },
+      {
+         "name_pinyin":{
+            "order":"asc"
+         }
+      }
+   ]
+}

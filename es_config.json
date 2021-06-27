@@ -1,0 +1,37 @@
+{
+   "mappings":{
+      "expert_type":{
+         "_all":{
+            "analyzer":"ik_smart"
+         },
+         "properties":{
+            "adv_count":{
+               "index":"not_analyzed",
+               "type":"long"
+            },
+            "category_id":{
+               "index":"not_analyzed",
+               "type":"long"
+            },
+            "desc":{
+               "analyzer":"ik_smart",
+               "index":"analyzed",
+               "type":"string"
+            },
+            "expert_status":{
+               "index":"not_analyzed",
+               "type":"long",
+               "null_value":0
+            },
+            "name":{
+               "analyzer":"ik_max_word",
+               "index":"analyzed",
+               "type":"string"
+            },
+         }
+   },
+   "settings":{
+      "number_of_replicas":2,
+      "number_of_shards":2
+   }
+}
