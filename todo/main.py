@@ -22,7 +22,7 @@ def update(task_id):
 	result = {}
 	try:
 		if "status" in data:
-			db_helper.update_status_entry(task_id, data["status"])
+			db_helper.update_status_entry(task_id, data["status"]) # implemented in database.py
 			result = {'success': True, 'response': 'Status Updated'}
 		elif "description" in data:
 			db_helper.update_task_entry(task_id, data["description"])
