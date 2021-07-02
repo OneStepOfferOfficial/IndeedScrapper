@@ -38,6 +38,7 @@ def update_task_entry(task_id, description):
 		for task in todo_list:
 		    if task["id"] == task_id:
 			    task["task"] = description
+			    break
 
 	with open('todos.json', 'w') as outfile:
 		json.dump(todo_list, outfile)
@@ -51,6 +52,7 @@ def update_status_entry(task_id, status):
 	    for task in todo_list:
 		    if task["id"] == task_id:
 			    task["status"] = status
+			    break
 
     with open('todos.json', 'w') as outfile:
 	    json.dump(todo_list, outfile)
