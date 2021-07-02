@@ -19,19 +19,23 @@ def delete(task_id):
 def update(task_id):
 	data = request.get_json()
 	print(data)
+	result = {}
 	try:
 		if "status" in data:
-			# db_helper.update_status_entry(task_id, data["status"])
+			db_helper.update_status_entry(task_id, data["status"])
 			result = {'success': True, 'response': 'Status Updated'}
 		elif "description" in data:
-			# db_helper.update_task_entry(task_id, data["description"])
+			db_helper.update_task_entry(task_id, data["description"])
 			result = {'success': True, 'response': 'Task Updated'}
 		else:
 			result = {'success': True, 'response': 'Nothing Updated'}
-	except:
+		print(result)
+	except Exception as e:
 		result = {'success': False, 'response': 'Something went wrong'}
-
+		print(result, str(e))
+    
 	return jsonify(result)
+
 
 @app.route("/create", methods=['POST'])
 def create():
@@ -40,11 +44,14 @@ def create():
 	result = {'success': True, 'response': 'Done'}
 	return jsonify(result)
 
+
 @app.route("/")
 def homepage():
 	""" returns rendered homepage """
 	items = db_helper.fetch_todo()
 	return render_template("index.html", items=items)
+
+
 
 if __name__ == '__main__': 
    app.run(port=5001, debug=True) # application will start listening for web request on port 5000
