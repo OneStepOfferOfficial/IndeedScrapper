@@ -2,8 +2,15 @@ from flask import render_template, request, jsonify
 import database as db_helper
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/appdb'
+
+db = SQLAlchemy(app)
+
+
 
 @app.route("/delete/<int:task_id>", methods=['POST'])
 def delete(task_id):
