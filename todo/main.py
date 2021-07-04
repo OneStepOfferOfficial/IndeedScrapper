@@ -1,9 +1,19 @@
 from flask import render_template, request, jsonify
 import database as db_helper
-
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
+USERNAME = "postgres"
+PASSWORD = "aurelienz055"
+
+
 app = Flask(__name__)
+app.config['DEBUG'] = True
+# associate flask instance with a prebuilt database in postgreSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{USERNAME}:{PASSWORD}@localhost/todolist'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+db = SQLAlchemy(app)
 
 @app.route("/delete/<int:task_id>", methods=['POST'])
 def delete(task_id):
@@ -54,4 +64,4 @@ def homepage():
 
 
 if __name__ == '__main__': 
-   app.run(port=5001, debug=True) # application will start listening for web request on port 5000
+   app.run(port=5001) # application will start listening for web request on port 5000
