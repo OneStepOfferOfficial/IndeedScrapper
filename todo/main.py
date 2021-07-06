@@ -1,27 +1,35 @@
 from flask import render_template, request, jsonify
-import database as db_helper
+from getpass import getpass
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
 USERNAME = "postgres"
 PASSWORD = "aurelienz055"
+# getpass(f"please input the password for user {USERNAME}:")
 
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
+# the password should be entered twice under 'debug' mode due to modifications to the database URI
+app.config['DEBUG'] = False
 # associate flask instance with a prebuilt database in postgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{USERNAME}:{PASSWORD}@localhost/todolist'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
+
+# to avoid circular import
+import database as db_helper
+
 @app.route("/delete/<int:task_id>", methods=['POST'])
 def delete(task_id):
 	try:
 		db_helper.remove_task_by_id(task_id)
 		result = {'success': True, 'response': 'Removed task'}
+		print(result)
 	except:
 		result = {'success': False, 'response': 'Something went wrong'}
+		print(result)
 
 	return jsonify(result)
 

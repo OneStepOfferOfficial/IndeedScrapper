@@ -1,5 +1,4 @@
 # this is a model for table "todos" in database "todolist"
-
 from main import db
 
 class Todos(db.Model):
