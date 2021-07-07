@@ -3,13 +3,12 @@ from getpass import getpass
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
+# weird to have to run these lines twice even not under 'debug' mode
 USERNAME = "postgres"
-PASSWORD = "aurelienz055"
-# getpass(f"please input the password for user {USERNAME}:")
+PASSWORD = getpass(f"please input the password for user {USERNAME}:") 
 
 
 app = Flask(__name__)
-# the password should be entered twice under 'debug' mode due to modifications to the database URI
 app.config['DEBUG'] = False
 # associate flask instance with a prebuilt database in postgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{USERNAME}:{PASSWORD}@localhost/todolist'
@@ -18,7 +17,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 
-# to avoid circular import
+# to avoid circular import when running init_table.py
 import database as db_helper
 
 @app.route("/delete/<int:task_id>", methods=['POST'])
