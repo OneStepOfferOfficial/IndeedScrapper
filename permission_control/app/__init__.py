@@ -23,7 +23,7 @@ def init_redis(app):
     app.config['SESSION_REDIS'] = redis_instance
 
 
-def init_mysql(app):
+def init_db(app):
     """
     初始化Mysql
     :param app:
@@ -50,7 +50,7 @@ def create_app(config='app.config.Config'):
     with app.app_context():
         app.config.from_object(config)
         init_redis(app)
-        init_mysql(app)
+        init_db(app)
         app.db = db
 
     app.register_blueprint(views)

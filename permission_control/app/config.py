@@ -3,7 +3,7 @@ import os
 
 
 class Config():
-    SQLALCHEMY_DATABASE_URI = DATABASE_URL = "mysql://root:123456@localhost/learn_flask?charset=utf8"
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL = "postgresql://root:123456@localhost/appdb"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # session相关
