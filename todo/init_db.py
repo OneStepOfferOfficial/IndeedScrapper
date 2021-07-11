@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from database import Task
 from main import db
 
+db.create_all()
+
 task1 = Task(name='Task 1', status='Todo')
 task2 = Task(name='Task 2', status='Todo')
 
