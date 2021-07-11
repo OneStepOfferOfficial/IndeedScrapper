@@ -9,14 +9,12 @@ from sqlalchemy.exc import OperationalError, ProgrammingError
 from app.user import user
 from app.views import views
 from app.common import RedisHandler
-from models import db, Users, Role
+from app.models import db, Users, Role
 
 
 def init_redis(app):
     """
     初始化redis
-    :param app:
-    :return:
     """
     redis_handler = RedisHandler()
     redis_instance = redis_handler.get_redis_instance()
@@ -25,9 +23,7 @@ def init_redis(app):
 
 def init_db(app):
     """
-    初始化Mysql
-    :param app:
-    :return:
+    初始化DB
     """
     url = make_url(app.config['SQLALCHEMY_DATABASE_URI'])
     db.init_app(app)

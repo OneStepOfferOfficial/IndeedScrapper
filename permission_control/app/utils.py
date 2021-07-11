@@ -2,7 +2,7 @@
 """
 desc：项目所需的功能函数
 """
-from models import Users
+from app.models import Users
 
 
 def judgemember(name, email):

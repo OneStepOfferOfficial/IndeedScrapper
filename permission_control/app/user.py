@@ -3,8 +3,8 @@
 from flask import Blueprint, render_template, redirect, request, url_for, \
     session, jsonify
 
-from models import db, Users
-from utils import judgemember
+from app.models import db, Users
+from app.utils import judgemember
 from app.models import Permissions
 from app.common.permission_required import permission_required
 
