@@ -2,6 +2,7 @@ from flask import render_template, request, jsonify
 from getpass import getpass
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 # weird to have to run these lines twice even not under 'debug' mode
 USERNAME = "postgres"

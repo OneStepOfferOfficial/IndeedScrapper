@@ -1,6 +1,7 @@
 from main import db
 from model_todos import Todos
 
+
 def fetch_todo():
     todo_list = []
     for instance in Todos.query.order_by(Todos.id).all():
