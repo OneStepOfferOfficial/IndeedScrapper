@@ -2,6 +2,7 @@ from flask import render_template, request, jsonify
 from getpass import getpass
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 # weird to have to run these lines twice even not under 'debug' mode
 USERNAME = "postgres"
@@ -22,51 +23,51 @@ import database as db_helper
 
 @app.route("/delete/<int:task_id>", methods=['POST'])
 def delete(task_id):
-	try:
-		db_helper.remove_task_by_id(task_id)
-		result = {'success': True, 'response': 'Removed task'}
-		print(result)
-	except:
-		result = {'success': False, 'response': 'Something went wrong'}
-		print(result)
+    try:
+        db_helper.remove_task_by_id(task_id)
+        result = {'success': True, 'response': 'Removed task'}
+        print(result)
+    except:
+        result = {'success': False, 'response': 'Something went wrong'}
+        print(result)
 
-	return jsonify(result)
+    return jsonify(result)
 
 @app.route("/edit/<int:task_id>", methods=['POST'])
 def update(task_id):
-	data = request.get_json()
-	print(data)
-	result = {}
-	try:
-		if "status" in data:
-			db_helper.update_status_entry(task_id, data["status"]) # implemented in database.py
-			result = {'success': True, 'response': 'Status Updated'}
-		elif "description" in data:
-			db_helper.update_task_entry(task_id, data["description"])
-			result = {'success': True, 'response': 'Task Updated'}
-		else:
-			result = {'success': True, 'response': 'Nothing Updated'}
-		print(result)
-	except Exception as e:
-		result = {'success': False, 'response': 'Something went wrong'}
-		print(result, str(e))
+    data = request.get_json()
+    print(data)
+    result = {}
+    try:
+        if "status" in data:
+            db_helper.update_status_entry(task_id, data["status"]) # implemented in database.py
+            result = {'success': True, 'response': 'Status Updated'}
+        elif "description" in data:
+            db_helper.update_task_entry(task_id, data["description"])
+            result = {'success': True, 'response': 'Task Updated'}
+        else:
+            result = {'success': True, 'response': 'Nothing Updated'}
+        print(result)
+    except Exception as e:
+        result = {'success': False, 'response': 'Something went wrong'}
+        print(result, str(e))
     
-	return jsonify(result)
+    return jsonify(result)
 
 
 @app.route("/create", methods=['POST'])
 def create():
-	data = request.get_json()
-	db_helper.insert_new_task(data['description'])
-	result = {'success': True, 'response': 'Done'}
-	return jsonify(result)
+    data = request.get_json()
+    db_helper.insert_new_task(data['description'])
+    result = {'success': True, 'response': 'Done'}
+    return jsonify(result)
 
 
 @app.route("/")
 def homepage():
-	""" returns rendered homepage """
-	items = db_helper.fetch_todo()
-	return render_template("index.html", items=items)
+    """ returns rendered homepage """
+    items = db_helper.fetch_todo()
+    return render_template("index.html", items=items)
 
 
 
