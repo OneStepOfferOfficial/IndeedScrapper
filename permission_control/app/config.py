@@ -3,7 +3,7 @@ import os
 
 
 class Config():
-    SQLALCHEMY_DATABASE_URI = DATABASE_URL = "postgresql://root:123456@localhost/appdb"
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL = "postgresql://postgres:aurelienz055@localhost/permission_control"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # session相关
