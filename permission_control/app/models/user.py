@@ -21,6 +21,7 @@ class Users(db.Model):
         self.name = name
         self.email = email
         self.password = bcrypt_sha256.encrypt(str(password))
+        self.role_id = 1
 
 
 class Permissions:

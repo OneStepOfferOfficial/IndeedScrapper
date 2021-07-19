@@ -8,7 +8,8 @@ class Config():
 
     # session相关
     SESSION_KEY = os.urandom(24) # 这里方便起见就随便输入个字符串，可以随机生成保存
-    SESSION_TYPE = 'redis'
+    # SECRET_KEY = os.urandom(24)
+    SESSION_TYPE = "filesystem"
     SESSION_PERMANENT = False
     SESSION_USE_SIGNER = False
     SESSION_KEY_PREFIX = 'session'

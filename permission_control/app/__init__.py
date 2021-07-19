@@ -8,17 +8,17 @@ from sqlalchemy.exc import OperationalError, ProgrammingError
 
 from app.user import user
 from app.views import views
-from app.common import RedisHandler
+# from app.common import RedisHandler
 from app.models import db, Users, Role
 
 
-def init_redis(app):
-    """
-    初始化redis
-    """
-    redis_handler = RedisHandler()
-    redis_instance = redis_handler.get_redis_instance()
-    app.config['SESSION_REDIS'] = redis_instance
+# def init_redis(app):
+#     """
+#     初始化redis
+#     """
+#     redis_handler = RedisHandler()
+#     redis_instance = redis_handler.get_redis_instance()
+#     app.config['SESSION_REDIS'] = redis_instance
 
 
 def init_db(app):
@@ -45,7 +45,7 @@ def create_app(config='app.config.Config'):
     app = Flask(__name__)
     with app.app_context():
         app.config.from_object(config)
-        init_redis(app)
+        # init_redis(app)
         init_db(app)
         app.db = db
 
