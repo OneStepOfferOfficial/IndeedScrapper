@@ -10,7 +10,7 @@ class Users(db.Model):
     """
     用户表
     """
-    __tablename__ = "user"
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
     email = db.Column(db.String(128))
@@ -21,6 +21,7 @@ class Users(db.Model):
         self.name = name
         self.email = email
         self.password = bcrypt_sha256.encrypt(str(password))
+        self.role_id = 1
 
 
 class Permissions:
@@ -41,6 +42,7 @@ class Role(db.Model):
     permissions = db.Column(db.Integer)
 
     @staticmethod
+    # create/reset all the necessary roles and update their permissions
     def init_role():
         role_name_list = ['user', 'admin']
         roles_permission_map = {
@@ -69,4 +71,4 @@ class Role(db.Model):
 
     def add_permission(self, permission):
         if not self.has_permission(permission):
-            self.permissions += permission
+            self.permissions |= permission
