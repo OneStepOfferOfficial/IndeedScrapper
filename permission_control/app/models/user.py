@@ -17,11 +17,17 @@ class Users(db.Model):
     password = db.Column(db.String(128))
     role_id = db.Column(db.Integer)
 
-    def __init__(self, name, email, password):
+    def __init__(self, name, email, password, role = "user"):
         self.name = name
         self.email = email
         self.password = bcrypt_sha256.encrypt(str(password))
-        self.role_id = 1
+        # default role is "user"
+        if role == "merchant":
+            self.role_id = 2
+        elif role == "admin":
+            self.role_id = 3
+        else:
+            self.role_id = 1
 
 
 class Permissions:
@@ -29,7 +35,8 @@ class Permissions:
     权限类
     """
     USER_MANAGE = 0X01
-    UPDATE_PERMISSION = 0X02
+    MERCHANT_MANAGE = 0X02
+    UPDATE_PERMISSION = 0X04
 
 
 class Role(db.Model):
@@ -44,10 +51,11 @@ class Role(db.Model):
     @staticmethod
     # create/reset all the necessary roles and update their permissions
     def init_role():
-        role_name_list = ['user', 'admin']
+        role_name_list = ['user', 'merchant', 'admin']
         roles_permission_map = {
             'user': [Permissions.USER_MANAGE],
-            'admin': [Permissions.USER_MANAGE, Permissions.UPDATE_PERMISSION]
+            'merchant': [Permissions.MERCHANT_MANAGE],
+            'admin': [Permissions.USER_MANAGE, Permissions.MERCHANT_MANAGE, Permissions.UPDATE_PERMISSION]
         }
         try:
             for role_name in role_name_list:

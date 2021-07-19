@@ -90,6 +90,19 @@ def user_manage():
     return jsonify(ret_data)
 
 
+@user.route('/merchant-manage', methods=['POST', 'GET'])
+@permission_required(Permissions.MERCHANT_MANAGE)
+def merchant_manage():
+    """
+    商家管理
+    """
+    if request.method == 'POST':
+        ret_data = dict(code=0, ret_msg='merchant manage')
+    else:
+        ret_data = dict(code=0, ret_msg='merchant list')
+    return jsonify(ret_data)
+
+
 @user.route('/permission-manage', methods=['POST', 'GET'])
 @permission_required(Permissions.UPDATE_PERMISSION)
 def permission_manage():
