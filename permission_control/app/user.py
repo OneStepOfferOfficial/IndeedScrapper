@@ -43,8 +43,8 @@ def login():
     登录接口
     """
     if request.method == 'POST':
-        name = request.json['user']
-        password = request.json['pwd']
+        name = request.json['name']
+        password = request.json['password']
         if name and password:
             current_user = db.session.query(Users).filter_by(name=name).first()
             if current_user:
@@ -59,6 +59,22 @@ def login():
         ret_data = dict(code=0, ret_msg='please login')
 
     return jsonify(ret_data)
+    # errors = []
+    # if request.method == 'POST':
+    #     name = request.form['name']
+    #     password = request.form['password']
+    #     if name and password:
+    #         current_user = db.session.query(Users).filter_by(name=name).first()
+    #         if current_user:
+    #             user_id = current_user.id
+    #             session['user_id'] = user_id
+    #             return redirect(url_for('views.home'))
+    #         else:
+    #             errors.append('user name or password is wrong')
+    #     else:
+    #         errors.append('please input user_name or password')
+
+    # return render_template("login.html", errors=errors)
 
 
 @user.route('/user-manage', methods=['POST', 'GET'])
@@ -71,6 +87,19 @@ def user_manage():
         ret_data = dict(code=0, ret_msg='user manage')
     else:
         ret_data = dict(code=0, ret_msg='user list')
+    return jsonify(ret_data)
+
+
+@user.route('/merchant-manage', methods=['POST', 'GET'])
+@permission_required(Permissions.MERCHANT_MANAGE)
+def merchant_manage():
+    """
+    商家管理
+    """
+    if request.method == 'POST':
+        ret_data = dict(code=0, ret_msg='merchant manage')
+    else:
+        ret_data = dict(code=0, ret_msg='merchant list')
     return jsonify(ret_data)
 
 

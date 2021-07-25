@@ -1,39 +1,37 @@
-import json
 from main import db
+from model_todos import Todos
 
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    status = db.Column(db.String(80), unique=True, nullable=False)
-
-    def __repr__(self):
-        return '<Task %r>' % self.name
 
 def fetch_todo():
-	with open('todos.json', 'r') as json_file:
-		todo_list = json.load(json_file)
-		return todo_list
+    todo_list = []
+    for instance in Todos.query.order_by(Todos.id).all():
+        mapping = {"id": instance.id, "task": instance.task_name, "status": instance.status}
+        todo_list.append(mapping)
+
+    return todo_list
+
 
 def insert_new_task(description):
-	todo_list = []
-	with open('todos.json', 'r') as json_file:
-		todo_list = json.load(json_file)
-	ids = [item["id"] for item in todo_list]
-	new_id = max(ids) + 1
-	todo_list.append({"id": new_id, "task": description, "status": "Todo"})
-	
-	with open('todos.json', 'w') as outfile:
-		json.dump(todo_list, outfile)
+    new_rec = Todos(task_name = description, status = "Todo")
+    db.session.add(new_rec)
+    db.session.commit()
+
 
 def remove_task_by_id(task_id):
-	todo_list = []
-	with open('todos.json', 'r') as json_file:
-		todo_list = json.load(json_file)
-	for task in todo_list:
-		if task["id"] == task_id:
-			todo_list.remove(task)
-	
-	with open('todos.json', 'w') as outfile:
-		json.dump(todo_list, outfile)
+    rec = Todos.query.get(task_id)
+    db.session.delete(rec)
+    db.session.commit()
 
-	
+
+# task description update support
+def update_task_entry(task_id, description):
+    rec = Todos.query.get(task_id)
+    rec.task_name = description
+    db.session.commit()
+
+
+# task status update support
+def update_status_entry(task_id, status):
+    rec = Todos.query.get(task_id)
+    rec.status = status
+    db.session.commit()
